@@ -1,0 +1,29 @@
+name: C CI - Автопарк (Makefile)
+
+on:
+  push:
+    branches: [ "main", "master" ]
+  pull_request:
+    branches: [ "main", "master" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Install dependencies (gcc, make, SQLite)
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y build-essential gcc make libsqlite3-dev
+
+    - name: Build project
+      run: make all
+
+    - name: Run check
+      run: make check
+
+    - name: Run distcheck
+      run: make distcheck
