@@ -1,0 +1,11 @@
+bin/
+build/
+coverage/
+*.o
+*.gcda
+*.gcno
+*.gcov
+*.sqlite
+*.db
+*.sqbpro
+.DS_Store
