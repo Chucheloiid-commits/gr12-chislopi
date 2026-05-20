@@ -1,0 +1,29 @@
+name: Build & Test Autopark
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y g++ make sqlite3 libsqlite3-dev
+
+      - name: Build project
+        run: make all
+
+      - name: Run tests
+        run: make test
+
+      - name: Run distcheck (full check)
+        run: make distcheck
