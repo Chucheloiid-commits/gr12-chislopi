@@ -1,14 +1,14 @@
-# Makefile для ЛР4 — Автопарк (C + SQLite)
+# Makefile для ЛР4 — Автопарк (C++ + SQLite)
 
-CC = gcc
+CXX = g++
 
-CFLAGS = -Wall -Wextra -std=c11 -Iautopark_app/include -g
+CXXFLAGS = -Wall -Wextra -std=c++17 -Iinclude -g
 
 LDFLAGS = -lsqlite3
 
-SRC = $(wildcard autopark_app/src/*.c)
+SRC = $(wildcard src/*.cpp)
 
-OBJ = $(SRC:autopark_app/src/%.c=build/%.o)
+OBJ = $(SRC:src/%.cpp=build/%.o)
 
 TARGET = bin/autopark
 
@@ -18,15 +18,13 @@ all: $(TARGET)
 
 $(TARGET): $(OBJ)
 	@mkdir -p bin
-	$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS)
+	$(CXX) $(CXXFLAGS) -o $@ $^ $(LDFLAGS)
 
 
-build/%.o: autopark_app/src/%.c
+build/%.o: src/%.cpp
 	@mkdir -p build
-	$(CC) $(CFLAGS) -c $< -o $@
+	$(CXX) $(CXXFLAGS) -c $< -o $@
 
-
-# === Обязательные цели для GitHub Actions ===
 
 check:
 	@echo "=== Running make check ==="
@@ -38,7 +36,7 @@ distcheck:
 	@echo "=== Running make distcheck ==="
 	$(MAKE) clean
 	$(MAKE) all
-	@echo "Distcheck passed - project builds cleanly ✓"
+	@echo "Distcheck passed ✓"
 
 
 clean:
